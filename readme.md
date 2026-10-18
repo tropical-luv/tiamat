@@ -1,15 +1,20 @@
-# Tiamat
+# Tiamat for Linux
 
-Tiamat is a keyboard-first terminal application that provides utility functions for the League of Legends client, inspired by [KbotExt](https://github.com/KebsCS/KBotExt/), by Kebs.
+A fork of [Tiamat](https://github.com/369gabriel/tiamat) by [369gabriel](https://github.com/369gabriel) that runs on Linux, against the macOS League of Legends client running under [darling-lol](https://github.com/lucannez64/darling-lol).
 
-For questions, suggestions, support or feedback you can reach me on discord (gabrielgyaf) or join the [discord server](https://discord.gg/YKcHrU2tgJ).
+Tiamat is a keyboard-first terminal application that provides utility functions for the League of Legends client. It is inspired by [KBotExt](https://github.com/KebsCS/KBotExt/), by Kebs. Everything below the install section works the same as upstream. This fork changes how the client is found and makes the interface use your terminal's background.
 
-The interface opens immediately, detects the League Client in the background, and shows module state with notifications for updates and errors.
-
-![Tiamat menu interface](https://i.imgur.com/coZgPY9.png)
+![Tiamat running on Arch Linux](docs/linux-screenshot.png)
 
 ## ⚠️ Important Notice
-Use at your own risk, as some features might violate Riot Games' Terms of Service.
+Use at your own risk, as some features might violate Riot Games' Terms of Service. Running League through Darling carries its own ban risk, so consider using an account you can afford to lose.
+
+## What's different from upstream
+* **Client detection under Darling.** Darling names the client processes after threads (`CrBrowserMain`, `mldr`), not `LeagueClientUx.exe`, so Tiamat finds the client by its executable path instead. If the command line doesn't carry the LCU port and token, Tiamat reads the lockfile in `$DPREFIX/Applications/League of Legends.app/Contents/LoL/` (default `~/.darling`).
+* **Transparent background.** Tiamat uses the terminal's own background, so translucent terminals show through.
+* **No `uv` needed.** `run-linux.sh` creates a virtualenv with the system Python.
+
+The detection change is proposed upstream in [369gabriel/tiamat#5](https://github.com/369gabriel/tiamat/pull/5).
 
 ## 🌟 Features
 
@@ -35,62 +40,32 @@ Use at your own risk, as some features might violate Riot Games' Terms of Servic
 
 ## 🚀 Installation
 
-### Releases
-
-You can find the most recent release [here](https://github.com/369gabriel/tiamat/releases).
-
 ### Prerequisites
-- Python 3.10 or higher
-- League of Legends client installed
-- Git (for cloning the repository)
+- Linux (tested on Arch) with Python 3.10 or higher
+- League of Legends running through [darling-lol](https://github.com/lucannez64/darling-lol)
+- Git
 
 ### Quick Start
-1. Clone this repository:
 ```bash
-git clone https://github.com/gyaaf/tiamat.git
-```
-
-2. Navigate to the project directory:
-```bash
+git clone https://github.com/tropical-luv/tiamat.git
 cd tiamat
-```
-
-3. Install required dependencies:
-```bash
-uv sync
-```
-
-4. Run the application:
-```bash
-uv run python tiamat/main.py
-```
-
-Run tests with:
-```bash
-uv run pytest
-```
-
-### Linux (Arch) via Darling
-This fork also detects the macOS League client running on Linux through
-[darling-lol](https://github.com/lucannez64/darling-lol). Under Darling the client
-processes are named after threads (`CrBrowserMain`, `mldr`), so Tiamat matches the
-`LeagueClientUx` executable path instead. It falls back to the lockfile in
-`$DPREFIX/Applications/League of Legends.app/Contents/LoL/` (defaults to `~/.darling`).
-
-```bash
 ./run-linux.sh
 ```
 
-![Tiamat running on Arch Linux](docs/linux-screenshot.png)
+The first run creates `.venv` and installs the dependencies. If your Darling prefix isn't `~/.darling`, export `DPREFIX` first, the same way darling-lol uses it.
 
-The script creates a `.venv` on first run, so `uv` is not required.
+Run the tests with:
+```bash
+.venv/bin/python -m pytest
+```
 
 ## 💡 Usage
 
 ### First Time Setup
 1. Start Tiamat.
-2. Launch the League of Legends client before or after Tiamat.
-3. Select a module with the arrow keys, mouse, or its number shortcut.
+2. Start League through darling-lol, before or after Tiamat.
+3. Wait until the top right shows `connected` with your Riot ID. Modules can't be switched on until then.
+4. Select a module with the arrow keys, the mouse, or its number shortcut.
 
 ### Keyboard Shortcuts
 
@@ -136,19 +111,14 @@ Configuration supports Porofessor, OP.GG, and U.GG for Lobby Reveal, plus indepe
 
 Instalock lets you select a main champion and an optional fallback. The fallback is disabled by default and can be cleared by selecting **Disabled**. If neither champion is available, Tiamat notifies you to pick manually.
 
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ## 📫 Support
-If you have any questions, suggestions, or complaints:
-- Create an [Issue](https://github.com/gyaaf/tiamat/issues)
+Problems specific to Linux or Darling: open an [issue on this fork](https://github.com/tropical-luv/tiamat/issues).
+Everything else: see [upstream Tiamat](https://github.com/369gabriel/tiamat).
 
 ## 🙏 Acknowledgments
-* [KbotExt](https://github.com/KebsCS/KBotExt/) by Kebs for inspiration
-* All contributors and users of Tiamat
+* [369gabriel](https://github.com/369gabriel) for Tiamat
+* [KBotExt](https://github.com/KebsCS/KBotExt/) by Kebs for the original inspiration
+* [darling-lol](https://github.com/lucannez64/darling-lol) for making League run on Linux
+
+## License
+GPL-3.0, like upstream. This fork modifies the original; changes are listed above and in the commit history (since 2026-10-18).
