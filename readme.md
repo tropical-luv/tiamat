@@ -81,6 +81,8 @@ processes are named after threads (`CrBrowserMain`, `mldr`), so Tiamat matches t
 ./run-linux.sh
 ```
 
+![Tiamat running on Arch Linux](docs/linux-screenshot.png)
+
 The script creates a `.venv` on first run, so `uv` is not required.
 
 ## 💡 Usage
