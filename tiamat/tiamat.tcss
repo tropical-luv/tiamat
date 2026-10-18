@@ -10,7 +10,7 @@ $warning: #c9a45c;
 $info: #7296b8;
 
 Screen {
-    background: $background;
+    background: ansi_default;
     color: $text;
 }
 
@@ -156,9 +156,10 @@ Screen {
 }
 
 #keybar {
-    height: 2;
+    height: 3;
     padding: 0 2;
-    background: $surface;
+    border-top: solid $border;
+    background: transparent;
     color: $muted;
 }
 

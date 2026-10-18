@@ -43,7 +43,9 @@ class TiamatApp(App):
     ENABLE_COMMAND_PALETTE = False
 
     def __init__(self, connect_on_mount=True, check_updates_on_mount=None):
-        super().__init__()
+        # ansi_color lets the screen use the terminal's own background, so
+        # translucent terminals (kitty background_opacity) show through.
+        super().__init__(ansi_color=True)
         self.connect_on_mount = connect_on_mount
         self.check_updates_on_mount = (
             connect_on_mount
